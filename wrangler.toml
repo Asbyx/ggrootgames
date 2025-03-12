@@ -1,10 +1,9 @@
 name = "ggrootgames-tracker-worker"
 compatibility_date = "2025-03-12"
 
+main = "backend/index.js"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "ggrootgames"
 database_id = "e3f8c62b-7141-4ab9-a205-084b47f53b32"
-
-# Define entry point
-main = "backend/index.js"
