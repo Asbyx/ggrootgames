@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Root Game Tracker</title>
+</head>
+<body>
+    <h1>Root Game Tracker</h1>
+    <form id="game-form">
+        <input type="text" id="player1" placeholder="Player 1" required>
+        <input type="text" id="player2" placeholder="Player 2" required>
+        <input type="text" id="winner" placeholder="Winner" required>
+        <button type="submit">Submit Game</button>
+    </form>
+    <h2>Recent Games</h2>
+    <ul id="game-list"></ul>
+
+    <script>
+        document.getElementById("game-form").onsubmit = async (e) => {
+            e.preventDefault();
+            const data = {
+                player1: document.getElementById("player1").value,
+                player2: document.getElementById("player2").value,
+                winner: document.getElementById("winner").value
+            };
+            await fetch("/api/report-game", { method: "POST", body: JSON.stringify(data) });
+            window.location.reload();
+        };
+
+        async function loadGames() {
+            const res = await fetch("/api/games");
+            const games = await res.json();
+            document.getElementById("game-list").innerHTML = games.map(g =>
+                `<li>${g.player1} vs ${g.player2} → Winner: ${g.winner}</li>`
+            ).join("");
+        }
+
+        loadGames();
+    </script>
+</body>
+</html>
