@@ -1,4 +1,4 @@
-name = "ggrootgames-tracker-worker"
+name = "ggrootgames"
 compatibility_date = "2025-03-12"
 
 main = "backend/index.js"
