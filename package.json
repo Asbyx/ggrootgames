@@ -1,0 +1,17 @@
+{
+  "name": "ggrootgames",
+  "version": "1.0.0",
+  "description": "Grand Groupe Root Games Tracker",
+  "main": "backend/index.js",
+  "scripts": {
+    "dev": "wrangler dev --local",
+    "dev:remote": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create ggrootgames",
+    "db:execute": "wrangler d1 execute ggrootgames --local --file=./db/schema.sql",
+    "db:execute:prod": "wrangler d1 execute ggrootgames --file=./db/schema.sql"
+  },
+  "dependencies": {
+    "wrangler": "^3.32.0"
+  }
+} 

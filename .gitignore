@@ -1,0 +1,24 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Wrangler local development
+.wrangler/
+.dev.vars
+
+# Local D1 database
+.D1_NAME.sqlite3
+
+# Environment variables
+.env
+.env.local
+
+# Build files
+dist/
+build/
+
+# OS specific files
+.DS_Store
+Thumbs.db 

@@ -3,7 +3,15 @@ compatibility_date = "2025-03-12"
 
 main = "backend/index.js"
 
+# Configure static assets
+[assets]
+directory = "./frontend"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# Configure D1 database
 [[d1_databases]]
 binding = "DB"
 database_name = "ggrootgames"
 database_id = "e3f8c62b-7141-4ab9-a205-084b47f53b32"
+migrations_dir = "db"

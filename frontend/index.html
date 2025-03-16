@@ -3,40 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Root Game Tracker</title>
+    <title>Grand Groupe Root Games Tracker</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1>Grand Groupe Root Games Tracker</h1>
-    <form id="game-form">
-        <input type="text" id="player1" placeholder="Player 1" required>
-        <input type="text" id="player2" placeholder="Player 2" required>
-        <input type="text" id="winner" placeholder="Winner" required>
-        <button type="submit">Submit Game</button>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <img src="img/root-logo.png" alt="Root Logo" class="logo-img">
+                <h1>Grand Groupe Root Games Tracker</h1>
+            </div>
+            <nav>
+                <button id="nav-toggle" class="mobile-nav-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul id="nav-menu" class="nav-menu">
+                    <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-page="report-game">Report Game</a></li>
+                    <li><a href="#" class="nav-link" data-page="player-comparison">Compare Players</a></li>
+                    <li><a href="#" class="nav-link" data-page="create-account">Create Account</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Dashboard Page -->
+            <section id="dashboard" class="page active">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h2>Player Leaderboard</h2>
+                        <div class="tab-content active" id="winrate-tab">
+                            <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+                            <table class="leaderboard-table">
+                                <thead>
+                                    <tr>
+                                        <th class="sortable" data-sort="rank">Rank <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="player">Player <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="winrate">Winrate <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="avgPlace">Avg Place <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="avgPoints">Avg Points <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="wins">Wins <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="games">Games <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="bestFaction">Best Faction <i class="fas fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="winrate-leaderboard"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card">
+                        <h2>Faction Statistics</h2>
+                        <div class="tab-content active" id="faction-wins-tab">
+                            <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+                            <table class="leaderboard-table">
+                                <thead>
+                                    <tr>
+                                        <th class="sortable" data-sort="rank">Rank <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="faction">Faction <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="wins">Wins <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="timesPlayed">Times Played <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="winrate">Winrate <i class="fas fa-sort"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="faction-wins-leaderboard"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card recent-games">
+                        <h2>Recent Games</h2>
+                        <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+                        <div id="recent-games-list" class="recent-games-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Report Game Page -->
+            <section id="report-game" class="page">
+                <div class="form-card">
+                    <h2>Report a Game</h2>
+                    <form id="game-form" class="game-form">
+                        <div class="player-entries" id="player-entries">
+                            <!-- Player entries will be added dynamically -->
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" id="add-player" class="btn btn-secondary">
+                                <i class="fas fa-plus"></i> Add Player
+                            </button>
+                            <div class="form-group">
+                                <label for="game-notes">Game Notes (Optional)</label>
+                                <textarea id="game-notes" rows="2" placeholder="Any notes about this game?"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Game</button>
+                        </div>
     </form>
-    <h2>Recent Games</h2>
-    <ul id="game-list"></ul>
+                </div>
+            </section>
 
-    <script>
-        document.getElementById("game-form").onsubmit = async (e) => {
-            e.preventDefault();
-            const data = {
-                player1: document.getElementById("player1").value,
-                player2: document.getElementById("player2").value,
-                winner: document.getElementById("winner").value
-            };
-            await fetch("/api/report-game", { method: "POST", body: JSON.stringify(data) });
-            window.location.reload();
-        };
+            <!-- Player Comparison Page -->
+            <section id="player-comparison" class="page">
+                <div class="form-card">
+                    <h2>Compare Players</h2>
+                    <div class="comparison-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="player1-select">Player 1</label>
+                                <select id="player1-select" required>
+                                    <option value="">Select Player 1</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="player2-select">Player 2</label>
+                                <select id="player2-select" required>
+                                    <option value="">Select Player 2</option>
+                                </select>
+                            </div>
+                            <button id="compare-btn" class="btn btn-primary">Compare</button>
+                        </div>
+                    </div>
+                    
+                    <div id="comparison-results" class="comparison-results hidden">
+                        <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>
+                        <div class="comparison-grid">
+                            <div class="comparison-card">
+                                <h3>Overall Stats</h3>
+                                <div class="comparison-table-container">
+                                    <table class="comparison-table" id="overall-comparison">
+                                        <thead>
+                                            <tr>
+                                                <th>Stat</th>
+                                                <th id="player1-name">Player 1</th>
+                                                <th id="player2-name">Player 2</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="comparison-card">
+                                <h3>Head-to-Head</h3>
+                                <div id="head-to-head" class="head-to-head"></div>
+                            </div>
+                            
+                            <div class="comparison-card full-width">
+                                <h3>Top Factions</h3>
+                                <div class="comparison-columns">
+                                    <div class="comparison-column">
+                                        <h4 id="player1-factions-title">Player 1's Factions</h4>
+                                        <div id="player1-factions" class="faction-list"></div>
+                                    </div>
+                                    <div class="comparison-column">
+                                        <h4 id="player2-factions-title">Player 2's Factions</h4>
+                                        <div id="player2-factions" class="faction-list"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        async function loadGames() {
-            const res = await fetch("/api/games");
-            const games = await res.json();
-            document.getElementById("game-list").innerHTML = games.map(g =>
-                `<li>${g.player1} vs ${g.player2} → Winner: ${g.winner}</li>`
-            ).join("");
-        }
+            <!-- Create Account Page -->
+            <section id="create-account" class="page">
+                <div class="form-card">
+                    <h2>Create Account</h2>
+                    <form id="account-form" class="account-form">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" required placeholder="Enter a unique username">
+                        </div>
+                        <div class="form-group">
+                            <label for="preferred-faction">Preferred Faction</label>
+                            <div class="faction-select-container" id="preferred-faction-container"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Account</button>
+                    </form>
+                </div>
+            </section>
+        </main>
 
-        loadGames();
-    </script>
+        <footer>
+            <p>&copy; 2024 Grand Groupe Root Games Tracker</p>
+        </footer>
+    </div>
+
+    <!-- Templates -->
+    <template id="player-entry-template">
+        <div class="player-entry">
+            <div class="player-entry-header">
+                <h3>Player <span class="player-number"></span></h3>
+                <button type="button" class="remove-player btn-icon" title="Remove player">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Player</label>
+                    <select class="player-select" required>
+                        <option value="">Select player</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Faction</label>
+                    <div class="faction-select-container"></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Points</label>
+                    <input type="number" class="points-input" required min="0" placeholder="Points">
+                </div>
+                <div class="form-group">
+                    <label>Ranking</label>
+                    <select class="ranking-select" required>
+                        <option value="">Select ranking</option>
+                        <option value="1">1st (Winner)</option>
+                        <option value="2">2nd</option>
+                        <option value="3">3rd</option>
+                        <option value="4">4th</option>
+                        <option value="5">5th</option>
+                        <option value="6">6th</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="game-card-template">
+        <div class="game-card">
+            <div class="game-header">
+                <div class="game-date"></div>
+            </div>
+            <div class="game-players"></div>
+            <div class="game-notes"></div>
+        </div>
+    </template>
+
+    <template id="player-result-template">
+        <div class="player-result">
+            <div class="player-faction">
+                <span class="player-name"></span>
+                <span class="faction-name"></span>
+            </div>
+            <div class="player-stats">
+                <span class="player-ranking"></span>
+                <span class="player-points"></span>
+            </div>
+        </div>
+    </template>
+
+    <template id="faction-stat-template">
+        <div class="faction-stat">
+            <div class="faction-name"></div>
+            <div class="faction-details">
+                <div class="stat-row">
+                    <span class="stat-label">Played:</span>
+                    <span class="times-played"></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Pick Rate:</span>
+                    <span class="pick-rate"></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Wins:</span>
+                    <span class="wins"></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Winrate:</span>
+                    <span class="winrate"></span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="js/app.js" type="module"></script>
 </body>
 </html>
