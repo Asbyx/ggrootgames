@@ -1,7 +1,14 @@
-DROP TABLE IF EXISTS games;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS factions;
 DROP TABLE IF EXISTS game_participants;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS games;
+DROP TABLE IF EXISTS factions;
+
+-- Factions table to store all available Root factions
+CREATE TABLE factions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL UNIQUE,
+  description TEXT
+);
 
 -- Users table to store player information
 CREATE TABLE users (
@@ -10,13 +17,6 @@ CREATE TABLE users (
   preferred_faction_id INTEGER,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (preferred_faction_id) REFERENCES factions(id)
-);
-
--- Factions table to store all available Root factions
-CREATE TABLE factions (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL UNIQUE,
-  description TEXT
 );
 
 -- Games table to store basic game information
