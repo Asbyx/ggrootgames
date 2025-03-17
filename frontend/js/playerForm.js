@@ -1,8 +1,8 @@
-// Account Form module for handling user account creation
+// Player Form module for handling user player creation
 import { getFactions, createUser, getFactionLogo } from './apiService.js';
 
-export function initAccountForm() {
-  const accountForm = document.getElementById('account-form');
+export function initPlayerForm() {
+  const playerForm = document.getElementById('player-form');
   const usernameInput = document.getElementById('username');
   const factionContainer = document.getElementById('preferred-faction-container');
   
@@ -10,7 +10,7 @@ export function initAccountForm() {
   loadFactions(factionContainer);
   
   // Handle form submission
-  accountForm.addEventListener('submit', async (e) => {
+  playerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const username = usernameInput.value.trim();
@@ -18,20 +18,20 @@ export function initAccountForm() {
     
     // Validate form
     if (!username) {
-      showAccountFormMessage('Please enter a username', 'error');
+      showPlayerFormMessage('Please enter a username', 'error');
       usernameInput.focus();
       return;
     }
 
     if (!preferredFactionId) {
-      showAccountFormMessage('Please select your preferred faction', 'error');
+      showPlayerFormMessage('Please select your preferred faction', 'error');
       return;
     }
     
     try {
       // Disable form during submission
       setFormDisabled(true);
-      showAccountFormMessage('Creating account...', 'info');
+      showPlayerFormMessage('Creating player...', 'info');
       
       // Create user
       const userData = {
@@ -42,10 +42,10 @@ export function initAccountForm() {
       const newUser = await createUser(userData);
       
       // Show success message
-      showAccountFormMessage(`Account created successfully! Welcome, ${newUser.name}!`, 'success');
+      showPlayerFormMessage(`Player created successfully! Welcome, ${newUser.name}!`, 'success');
       
       // Reset form
-      accountForm.reset();
+      playerForm.reset();
       resetFactionSelect(factionContainer);
       
       // Re-enable form
@@ -54,16 +54,16 @@ export function initAccountForm() {
       // Redirect to dashboard after a delay
       setTimeout(() => {
         document.querySelector('.nav-link[data-page="dashboard"]').click();
-      }, 2000);
+      }, 500);
       
     } catch (error) {
-      console.error('Error creating account:', error);
+      console.error('Error creating player:', error);
       
       // Show specific error for duplicate username
       if (error.message.includes('already exists')) {
-        showAccountFormMessage('This username is already taken. Please choose another one.', 'error');
+        showPlayerFormMessage('This username is already taken. Please choose another one.', 'error');
       } else {
-        showAccountFormMessage(`Error: ${error.message}`, 'error');
+        showPlayerFormMessage(`Error: ${error.message}`, 'error');
       }
       
       setFormDisabled(false);
@@ -77,7 +77,7 @@ async function loadFactions(container) {
     createCustomFactionSelect(container, factions);
   } catch (error) {
     console.error('Error loading factions:', error);
-    showAccountFormMessage('Failed to load factions. Please try again.', 'error');
+    showPlayerFormMessage('Failed to load factions. Please try again.', 'error');
   }
 }
 
@@ -153,7 +153,7 @@ function resetFactionSelect(container) {
 }
 
 function setFormDisabled(disabled) {
-  const form = document.getElementById('account-form');
+  const form = document.getElementById('player-form');
   const inputs = form.querySelectorAll('input, button');
   const customSelect = form.querySelector('.custom-select-container');
   
@@ -170,20 +170,20 @@ function setFormDisabled(disabled) {
   }
 }
 
-function showAccountFormMessage(message, type = 'info') {
+function showPlayerFormMessage(message, type = 'info') {
   // Remove any existing message
-  const existingMessage = document.querySelector('.account-form-message');
+  const existingMessage = document.querySelector('.player-form-message');
   if (existingMessage) {
     existingMessage.remove();
   }
   
   // Create message element
   const messageElement = document.createElement('div');
-  messageElement.className = `account-form-message ${type}`;
+  messageElement.className = `player-form-message ${type}`;
   messageElement.textContent = message;
   
   // Add to form
-  const form = document.getElementById('account-form');
+  const form = document.getElementById('player-form');
   form.insertAdjacentElement('beforebegin', messageElement);
   
   // Auto-remove success and info messages after a delay

@@ -588,32 +588,32 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* Form Messages */
-.form-message, .account-form-message {
+.form-message, .player-form-message {
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
   border-radius: var(--border-radius);
   font-weight: 500;
 }
 
-.form-message.success, .account-form-message.success {
+.form-message.success, .player-form-message.success {
   background-color: rgba(76, 175, 80, 0.1);
   color: var(--success-color);
   border: 1px solid var(--success-color);
 }
 
-.form-message.error, .account-form-message.error {
+.form-message.error, .player-form-message.error {
   background-color: rgba(244, 67, 54, 0.1);
   color: var(--error-color);
   border: 1px solid var(--error-color);
 }
 
-.form-message.info, .account-form-message.info {
+.form-message.info, .player-form-message.info {
   background-color: rgba(33, 150, 243, 0.1);
   color: #2196f3;
   border: 1px solid #2196f3;
 }
 
-.form-message.warning, .account-form-message.warning {
+.form-message.warning, .player-form-message.warning {
   background-color: rgba(255, 152, 0, 0.1);
   color: var(--warning-color);
   border: 1px solid var(--warning-color);
