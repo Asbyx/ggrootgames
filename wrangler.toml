@@ -13,5 +13,6 @@ not_found_handling = "single-page-application"
 [[d1_databases]]
 binding = "DB"
 database_name = "ggrootgames"
+# Example key, to change
 database_id = "e3f8c62b-7141-4ab9-a205-084b47f53b32"
 migrations_dir = "db"
