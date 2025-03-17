@@ -3,7 +3,7 @@ import { initNavigation } from './navigation.js';
 import { initDashboard } from './dashboard.js';
 import { initGameForm } from './gameForm.js';
 import { initPlayerComparison } from './playerComparison.js';
-import { initAccountForm } from './accountForm.js';
+import { initPlayerForm } from './playerForm.js';
 import { API_BASE_URL } from './config.js';
 
 // Initialize all modules when the DOM is fully loaded
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initDashboard();
   initGameForm();
   initPlayerComparison();
-  initAccountForm();
+  initPlayerForm();
   
   // Check if API is available
   fetch(`${API_BASE_URL}/factions`)
