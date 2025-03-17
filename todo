@@ -1,9 +1,12 @@
 # V1: release
-- optimization of db
-- buy me a coffey link
-- readme extra clear and easy to use
-- push release on github, publicity in discord reddit
+- Readme extra clear and easy to use
+- Release on github
+- Example website on github.io
+- Publicity in discord & reddit
 
 # V2: upgrade
-- modification page of the db (games & players)
-- compare players -> players stats with a compare players feature
+- Modification page of the db (games & players)
+- Compare players -> players stats with a compare players feature
+
+# VX: ideas
+- optimization of db (factions db not really necessary, games & games_participants might be merged ?)

@@ -37,13 +37,13 @@ body {
 }
 
 a {
-  color: var(--primary-color);
+  color: var(--text-color);
   text-decoration: none;
   transition: var(--transition);
 }
 
 a:hover {
-  color: var(--primary-dark);
+  color: var(--warning-color);
 }
 
 button {
@@ -100,6 +100,19 @@ footer {
   text-align: center;
   padding: 1rem;
   margin-top: auto;
+}
+
+.footer-link {
+  display: flex;
+  justify-content: center; /* Center the footer links */
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5rem;
 }
 
 /* Navigation */

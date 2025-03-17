@@ -113,3 +113,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [Cloudflare Workers](https://workers.cloudflare.com/)
 - [Cloudflare D1](https://developers.cloudflare.com/d1/)
 - [Cloudflare Pages](https://pages.cloudflare.com/) 
+- [Flaticons](https://flaticon.com)
