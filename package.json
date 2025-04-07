@@ -9,9 +9,15 @@
     "deploy": "wrangler deploy",
     "db:create": "wrangler d1 create ggrootgames",
     "db:execute": "wrangler d1 execute ggrootgames --local --file=./db/schema.sql",
-    "db:execute:prod": "wrangler d1 execute ggrootgames --file=./db/schema.sql"
+    "db:execute:prod": "wrangler d1 execute ggrootgames --file=./db/schema.sql",
+    "package": "node scripts/package.js",
+    "deploy:url": "node scripts/create-deploy-url.js",
+    "deploy:all": "wrangler deploy && npm run db:execute:prod && npm run deploy:url"
   },
   "dependencies": {
-    "wrangler": "^3.32.0"
+    "toml": "^3.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
   }
 } 

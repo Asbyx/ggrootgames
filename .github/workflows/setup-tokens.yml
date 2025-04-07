@@ -1,0 +1,51 @@
+name: Setup Deployment Tokens
+
+on:
+  workflow_dispatch:
+    inputs:
+      cf_email:
+        description: 'Your Cloudflare email'
+        required: true
+      cf_global_api_key:
+        description: 'Your Cloudflare Global API Key'
+        required: true
+        
+jobs:
+  setup-tokens:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Install Cloudflare API Tools
+        run: |
+          npm install -g cloudflare
+          
+      - name: Generate Instructions
+        run: |
+          echo "============================================"
+          echo "SETUP INSTRUCTIONS:"
+          echo "============================================"
+          echo "1. Log in to your Cloudflare dashboard at https://dash.cloudflare.com/"
+          echo "2. Go to 'My Profile' > 'API Tokens'"
+          echo "3. Create a new token with the following permissions:"
+          echo "   - Account > Workers Scripts > Edit"
+          echo "   - Account > Workers Routes > Edit"
+          echo "   - Account > D1 > Edit"
+          echo "   - Account > Account Settings > Read"
+          echo ""
+          echo "4. Get your Cloudflare Account ID:"
+          echo "   - Go to Workers & Pages in your Cloudflare dashboard"
+          echo "   - Your Account ID is in the URL: https://dash.cloudflare.com/<ACCOUNT_ID>/workers"
+          echo ""
+          echo "5. Add the following secrets to your GitHub repository (Settings > Secrets and variables > Actions):"
+          echo "   - CF_API_TOKEN: Your new API token"
+          echo "   - CF_ACCOUNT_ID: Your Cloudflare Account ID"
+          echo "   - CF_WORKERS_SUBDOMAIN: workers.dev"
+          echo ""
+          echo "6. Return to the Actions tab and run the 'Deploy to Cloudflare' workflow" 
