@@ -1,6 +1,6 @@
 // Game Form module for handling game reporting functionality
 import { getUsers, getFactions, reportGame, getFactionLogo } from './apiService.js';
-import { MIN_PLAYERS, MAX_PLAYERS } from './config.js';
+import { MIN_PLAYERS, MAX_PLAYERS, DEFAULT_PLAYER_SLOTS } from './config.js';
 
 // Store cached data
 let users = [];
@@ -23,16 +23,24 @@ export function initGameForm() {
         
         // Clear and reinitialize player entries
         playerEntries.innerHTML = '';
-        // Initialize with 4 player slots
-        for (let i = 0; i < 4; i++) {
+        // Initialize with default player slots
+        for (let i = 0; i < DEFAULT_PLAYER_SLOTS; i++) {
           addPlayer();
         }
       }
     });
   });
   
-  // Handle add player button - remove this since we always want 4 slots
-  addPlayerBtn.style.display = 'none';
+  // Handle add player button - enable it for adding more players
+  addPlayerBtn.style.display = 'block';
+  addPlayerBtn.addEventListener('click', () => {
+    // Check if we've reached the maximum number of players
+    if (playerEntries.children.length < MAX_PLAYERS) {
+      addPlayer();
+    } else {
+      showFormMessage(`Maximum of ${MAX_PLAYERS} players allowed`, 'error');
+    }
+  });
   
   // Handle form submission
   gameForm.addEventListener('submit', async (e) => {
@@ -78,8 +86,8 @@ export function initGameForm() {
     }
   });
   
-  // Add initial players - always 4 slots
-  for (let i = 0; i < 4; i++) {
+  // Add initial players
+  for (let i = 0; i < DEFAULT_PLAYER_SLOTS; i++) {
     addPlayer();
   }
 }
@@ -171,9 +179,19 @@ function addPlayer() {
     calculateRankings();
   });
   
-  // Remove the remove player button since we always want 4 slots
+  // Handle remove player button - only show for players beyond the initial default
   const removeBtn = playerEntry.querySelector('.remove-player');
-  removeBtn.style.display = 'none';
+  if (playerCount > DEFAULT_PLAYER_SLOTS) {
+    removeBtn.style.display = 'block';
+    removeBtn.addEventListener('click', () => {
+      playerEntry.remove();
+      updatePlayerNumbers();
+      // Recalculate rankings after removing a player
+      calculateRankings();
+    });
+  } else {
+    removeBtn.style.display = 'none';
+  }
   
   // Add to player entries
   playerEntries.appendChild(playerEntry);
@@ -342,6 +360,12 @@ function validateForm() {
     return false;
   }
   
+  // Check if we have too many players
+  if (activePlayers.length > MAX_PLAYERS) {
+    showFormMessage(`Maximum ${MAX_PLAYERS} players allowed`, 'error');
+    return false;
+  }
+  
   // Check for duplicate players
   const selectedPlayers = new Set();
   
@@ -416,8 +440,8 @@ function resetForm() {
   // Clear notes
   notesInput.value = '';
   
-  // Add 4 player slots
-  for (let i = 0; i < 4; i++) {
+  // Add default player slots
+  for (let i = 0; i < DEFAULT_PLAYER_SLOTS; i++) {
     addPlayer();
   }
 }

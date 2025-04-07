@@ -30,11 +30,18 @@ export const RANKING_DISPLAY = {
   3: '3rd',
   4: '4th',
   5: '5th',
-  6: '6th'
+  6: '6th',
+  7: '7th',
+  8: '8th',
+  9: '9th',
+  10: '10th'
 };
 
 // Maximum number of players in a game
-export const MAX_PLAYERS = 4;
+export const MAX_PLAYERS = 10;
 
 // Minimum number of players in a game
-export const MIN_PLAYERS = 2; 
+export const MIN_PLAYERS = 2;
+
+// Default number of player slots to show initially
+export const DEFAULT_PLAYER_SLOTS = 4; 
